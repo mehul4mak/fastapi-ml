@@ -3,8 +3,17 @@
 from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
+import pandas as pd
+from starter.ml.data import process_data
+from starter.ml.model import train_model
+
 
 # Add code to load in the data.
+def load_data(path: str) -> pd.DataFrame:
+    return pd.read_csv(path)
+
+
+data = load_data("./data/census.csv")
 
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(data, test_size=0.20)
@@ -19,10 +28,11 @@ cat_features = [
     "sex",
     "native-country",
 ]
+
+
+# Proces the test data with the process_data function.
 X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
-
-# Proces the test data with the process_data function.
 
 # Train and save a model.
