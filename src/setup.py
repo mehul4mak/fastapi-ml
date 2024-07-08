@@ -1,8 +1,8 @@
 import setuptools
 
 setuptools.setup(
-    name="starter",
-    version="0.0.0",
-    description="Starter code.",
+    name="fastapi",
+    version="0.0.1",
+    description="FastAPI Deployment with Cloud",
     author="Student",
 )
