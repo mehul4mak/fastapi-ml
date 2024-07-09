@@ -5,7 +5,7 @@ class InputData(BaseModel):
     """Model Input data Schema"""
 
     # Using the first row of census.csv as sample
-    age: int = Field(int, example=39)
+    age: int = Field(None, example=39)
     workclass: str = Field(None, example="State-gov")
     fnlgt: int = Field(None, example=77516)
     education: str = Field(None, example="Bachelors")

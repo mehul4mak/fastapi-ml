@@ -1,14 +1,14 @@
 """Inference API Router"""
 
 from fastapi import APIRouter
-from schema import InputData, Prediction
 
+from src.schema import InputData, Prediction
 
 inference = APIRouter(prefix="/inference")
 
 
 @inference.post("/predict")
-async def predict(data: InputData) -> Prediction:
+async def predict(input_data: InputData) -> Prediction:
     """Prediction API
 
     Args:
@@ -17,7 +17,7 @@ async def predict(data: InputData) -> Prediction:
     Returns:
         Prediction: Prediction result from ML given inputs
     """
-    _data = data.model_dump_json()
+    _data = input_data.model_dump_json()
 
     print(_data)
 
