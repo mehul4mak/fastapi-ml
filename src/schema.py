@@ -24,4 +24,4 @@ class InputData(BaseModel):
 class Prediction(BaseModel):
     """Prediction Schema"""
 
-    prediction: float
+    prediction: str

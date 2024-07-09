@@ -2,8 +2,8 @@
 
 import uvicorn
 from fastapi import FastAPI
-from .routers.inference import inference
 
+from routers.infapi import infapi
 
 app = FastAPI()
 
@@ -14,7 +14,7 @@ async def root():
     return "Welcome!"
 
 
-app.include_router(inference)
+app.include_router(infapi)
 
 
 if __name__ == "__main__":

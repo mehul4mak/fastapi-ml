@@ -3,7 +3,7 @@
 For additional information see the Model Card paper: https://arxiv.org/pdf/1810.03993.pdf
 
 ## Model Details
-The model created by Thang Nguyen-Duc (ThangND34)
+The model created by Mehul Kumawat
 
 Model use `RandomForestClassifier` from `sklearn.model.RandomForestClassifier` for classification tasks.
 
@@ -43,9 +43,9 @@ The original dataset is first preprocessed and then split into training and eval
 
 ## Metrics
 Performances of the model:
-- precision: 0.7272727272727273
-- recall: 0.6408544726301736
-- fbeta: 0.6813342796309441
+- Precision: 72%
+- Recall: 64%
+- Fbeta: 68%
 
 ## Ethical Considerations
 This model is trained on census data. The model is not biased towards any particular group of people.

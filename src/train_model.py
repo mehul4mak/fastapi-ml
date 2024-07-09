@@ -3,33 +3,28 @@
 
 # Script to train machine learning model.
 
+# Add the necessary imports for the starter code.
 from sklearn.model_selection import train_test_split
 
-# Add the necessary imports for the starter code.
-import pandas as pd
+from clean_data import load_data
 from ml.data import process_data
-from ml.model import train_model
+from ml.model import save_model, train_model
 
+data = load_data("data/cleaned_census.csv")
 
-# Add code to load in the data.
-def load_data(path: str) -> pd.DataFrame:
-    return pd.read_csv(path)
-
-
-data = load_data("./data/census.csv")
-
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
-train, test = train_test_split(data, test_size=0.20)
+# Optional enhancement,
+# use K-fold cross validation instead of a train-test split.
+train, _ = train_test_split(data, test_size=0.20, random_state=42)
 
 cat_features = [
     "workclass",
     "education",
-    "marital-status",
+    "marital_status",
     "occupation",
     "relationship",
     "race",
     "sex",
-    "native-country",
+    "native_country",
 ]
 
 
@@ -38,4 +33,9 @@ X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
 
-# Train and save a model.
+# # Train and save a model.
+model = train_model(X_train, y_train)
+
+save_model(model, file_name="./model/model.pkl")
+save_model(encoder, file_name="./model/onehotencoder.pkl")
+save_model(lb, file_name="./model/labelbinarizer.pkl")
