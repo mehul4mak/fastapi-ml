@@ -3,4 +3,4 @@
 ['remote "myremote"']
     url = gdrive://1bq0OqPX7fzHFCDpUce2Ka0HUiXqcejKS
     gdrive_use_service_account = true
-    gdrive_service_account_user_email = mahi241195@gmail.com
+    gdrive_service_account_user_email = fastapi-dvc@render-fastapi-dvc.iam.gserviceaccount.com 
