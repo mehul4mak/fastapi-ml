@@ -28,7 +28,12 @@ jobs:
         python -m pip install flake8 pytest
         pip install -r src/requirements.txt
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
+    - name: Configure Google Drive remote
+      run: |
+        echo "$GDRIVE_CREDENTIALS" > credentials.json
+        dvc remote modify myremote gdrive_credentials_file credentials.json
+      env:
+        GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
     - name: Lint with flake8
       run: |
         cd src/.
