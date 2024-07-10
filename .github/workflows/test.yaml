@@ -13,11 +13,15 @@ jobs:
 
 
     steps:
-    - uses: actions/checkout@v2 # Calling a pre-built GitHub Action which allows your Action to access your repository.
+    - uses: actions/checkout@v4 # Calling a pre-built GitHub Action which allows your Action to access your repository.
+    - uses: iterative/setup-dvc@v1
     - name: Set up Python # Name of an action that sets up Python.
-      uses: actions/setup-python@v2 # A pre-built GitHub Action that sets up a Python environment.
+      uses: actions/setup-python@v3 # A pre-built GitHub Action that sets up a Python environment.
       with:
         python-version: 3.8
+    - name: setup dvc
+      run: |
+        dvc pull
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip

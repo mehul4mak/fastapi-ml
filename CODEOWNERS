@@ -1,1 +1,3 @@
 *           @udacity/active-public-content
+
+dvc remote add -d myremote gdrive://1bq0OqPX7fzHFCDpUce2Ka0HUiXqcejKS
