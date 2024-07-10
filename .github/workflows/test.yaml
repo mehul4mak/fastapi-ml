@@ -1,6 +1,10 @@
-name: Testing # Name of the Action.
+name: CI # Name of the Action.
 
-on: [push] # When this action runs.
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ] # When this action runs.
 
 jobs:
   build:
@@ -10,27 +14,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2 # Calling a pre-built GitHub Action which allows your Action to access your repository.
-    - name: Set up Python ${{ matrix.python-version }} # Name of an action that sets up Python.
+    - name: Set up Python # Name of an action that sets up Python.
       uses: actions/setup-python@v2 # A pre-built GitHub Action that sets up a Python environment.
       with:
         python-version: 3.8
-    - name: Setup miniconda
+    - name: Install dependencies
       run: |
-        mkdir -p ~/miniconda3
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-        bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-        rm -rf ~/miniconda3/miniconda.sh
-    
-    - name: Install dependencies # The first step that isn't just calling another action.
-      run: |
-        conda create -n condaenv "python=3.8" scikit-learn pandas numpy pytest jupyter jupyterlab fastapi uvicorn -c conda-forge
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest
+        pip install -r src/requirements.txt
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Activate conda env # The first step that isn't just calling another action.
-      run: |
-        conda init
-        conda activate condaenv
-        
-
-    # - name: Test with pytest # Final action which runs pytest. If any test fails, then this Action fails.
+    # - name: Lint with flake8
     #   run: |
-    #     pytest
+    #     # stop the build if there are Python syntax errors or undefined names
+    #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+    
+    - name: Test with pytest  # Final action which runs pytest. If any test fails, then this Action fails.
+      run: |
+        cd src/.
+        pytest --versobe

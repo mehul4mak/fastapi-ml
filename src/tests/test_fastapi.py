@@ -1,15 +1,18 @@
 from fastapi.testclient import TestClient
 
 from main import app
-from routers.infapi import infapi
 
 client = TestClient(app)
-# client_infapi = TestClient(infapi)
 
 
-def test_read_root():
+def test_read_root_get():
     response = client.get("/")
     assert response.status_code == 200
+
+
+def test_read_root_content():
+    response = client.get("/")
+
     assert response.content == b'"Welcome!"'
 
 

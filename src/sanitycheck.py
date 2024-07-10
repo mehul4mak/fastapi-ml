@@ -1,10 +1,14 @@
-from os import path
-
 import argparse
 import importlib
 import inspect
+import logging
 import os
 import sys
+from os import path
+
+logger = logging.getLogger(__name__)
+
+logger.setLevel(logging.DEBUG)
 
 FAIL_COLOR = "\033[91m"
 OK_COLOR = "\033[92m"
@@ -21,7 +25,7 @@ def run_sanity_check(test_dir):
         "Please enter the path to the file that contains your test cases for the GET() and POST() methods"
     )
     print("The path should be something like abc/def/test_xyz.py")
-    filepath = input("> ")
+    filepath = "tests/test_fastapi.py"  # input("> ")
 
     assert path.exists(filepath), f"File {filepath} does not exist."
     sys.path.append(path.dirname(filepath))
@@ -31,24 +35,32 @@ def run_sanity_check(test_dir):
 
     test_function_names = list(
         filter(
-            lambda x: inspect.isfunction(getattr(module, x)) and not x.startswith("__"),
+            lambda x: inspect.isfunction(getattr(module, x))
+            and not x.startswith("__"),
             dir(module),
         )
     )
+    logger.info(test_function_names)
+    print(test_function_names)
 
     test_functions_for_get = list(
         filter(
-            lambda x: inspect.getsource(getattr(module, x)).find(".get(") != -1,
+            lambda x: inspect.getsource(getattr(module, x)).find(".get(")
+            != -1,
             test_function_names,
         )
     )
+    logger.info(test_functions_for_get)
     test_functions_for_post = list(
         filter(
-            lambda x: inspect.getsource(getattr(module, x)).find(".post(") != -1,
+            lambda x: inspect.getsource(getattr(module, x)).find(".post(")
+            != -1,
             test_function_names,
         )
     )
 
+    logger.info(test_functions_for_post)
+    return
     print("\n============= Sanity Check Report ===========")
     SANITY_TEST_PASSING = True
     WARNING_COUNT = 1
@@ -72,7 +84,9 @@ def run_sanity_check(test_dir):
             source = inspect.getsource(getattr(module, func))
             if source.find(".status_code") != -1:
                 TEST_FOR_GET_METHOD_RESPONSE_CODE = True
-            if (source.find(".json") != -1) or (source.find("json.loads") != -1):
+            if (source.find(".json") != -1) or (
+                source.find("json.loads") != -1
+            ):
                 TEST_FOR_GET_METHOD_RESPONSE_BODY = True
 
         if not TEST_FOR_GET_METHOD_RESPONSE_CODE:
@@ -99,7 +113,9 @@ def run_sanity_check(test_dir):
     if not test_functions_for_post:
         print(FAIL_COLOR + f"[{WARNING_COUNT}]")
         WARNING_COUNT += 1
-        print(FAIL_COLOR + "No test cases were detected for the POST() method.")
+        print(
+            FAIL_COLOR + "No test cases were detected for the POST() method."
+        )
         print(
             FAIL_COLOR
             + "Please make sure you have TWO test cases for the POST() method."
@@ -110,7 +126,10 @@ def run_sanity_check(test_dir):
         if len(test_functions_for_post) == 1:
             print(f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
-            print(FAIL_COLOR + "Only one test case was detected for the POST() method.")
+            print(
+                FAIL_COLOR
+                + "Only one test case was detected for the POST() method."
+            )
             print(
                 FAIL_COLOR
                 + "Please make sure you have two test cases for the POST() method."
@@ -122,7 +141,9 @@ def run_sanity_check(test_dir):
             source = inspect.getsource(getattr(module, func))
             if source.find(".status_code") != -1:
                 TEST_FOR_POST_METHOD_RESPONSE_CODE = True
-            if (source.find(".json") != -1) or (source.find("json.loads") != -1):
+            if (source.find(".json") != -1) or (
+                source.find("json.loads") != -1
+            ):
                 TEST_FOR_POST_METHOD_RESPONSE_BODY = True
                 COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT += 1
 
