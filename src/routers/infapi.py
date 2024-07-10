@@ -1,19 +1,25 @@
 """Inference API Router"""
 
-import os
-
 import pandas as pd
+import yaml
 from fastapi import APIRouter
 
 from ml.data import process_data
 from ml.model import inference, load_model
 from schema import InputData, Prediction
-from train_model import cat_features
+
+# pylint: disable=C0103
+
+with open("./config.yaml", "rb") as f:
+    config = yaml.safe_load(f)
+
+
+model = load_model(config["MODEL_PATH"])
+encoder = load_model(config["OHE_PATH"])
+lb = load_model(config["LB_PATH"])
+
 
 infapi = APIRouter(prefix="")
-model = load_model("./model/model.pkl")
-encoder = load_model("./model/onehotencoder.pkl")
-lb = load_model("./model/labelbinarizer.pkl")
 
 
 @infapi.post("/predict")
@@ -29,11 +35,9 @@ async def predict(input_data: InputData) -> Prediction:
 
     df = pd.DataFrame(input_data.dict(), index=[0])
 
-    print(df)
-
-    X_test, y_test, _, _ = process_data(
+    X_test, _, _, _ = process_data(
         df,
-        categorical_features=cat_features,
+        categorical_features=config["CAT_FEATURES"],
         training=False,
         encoder=encoder,
     )

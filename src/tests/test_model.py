@@ -1,16 +1,9 @@
-import pytest
 from sklearn.base import BaseEstimator
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
 from ml.data import process_data
-from ml.model import (
-    compute_model_metrics,
-    inference,
-    load_model,
-    save_model,
-    train_model,
-)
+from ml.model import compute_model_metrics, inference, train_model
 
 
 def test_train_model(df, cat_features, label):

@@ -1,8 +1,51 @@
+"""
+Pydantic Models for API Input and Output
+
+This module defines Pydantic models for validating API input data and
+output predictions.
+"""
+
 from pydantic import BaseModel, Field
 
 
 class InputData(BaseModel):
-    """Model Input data Schema"""
+    """
+    Input Data Schema for Machine Learning Prediction API
+
+    Attributes:
+    -----------
+    age : int
+        Age of the individual.
+    workclass : str
+        Type of workclass.
+    fnlgt : int
+        Final weight in the census data.
+    education : str
+        Level of education.
+    education_num : int
+        Numeric representation of education level.
+    marital_status : str
+        Marital status of the individual.
+    occupation : str
+        Occupation of the individual.
+    relationship : str
+        Relationship status of the individual.
+    race : str
+        Ethnicity of the individual.
+    sex : str
+        Gender of the individual.
+    capital_gain : int
+        Capital gains of the individual.
+    capital_loss : int
+        Capital losses of the individual.
+    hours_per_week : int
+        Number of hours worked per week.
+    native_country : str
+        Native country of the individual.
+    model_feature : str
+        Additional feature specific to the model
+        (example: 'feature1', 'feature2').
+    """
 
     # Using the first row of census.csv as sample
     age: int = Field(None, example=39)
@@ -22,6 +65,13 @@ class InputData(BaseModel):
 
 
 class Prediction(BaseModel):
-    """Prediction Schema"""
+    """
+    Prediction Schema for Machine Learning Prediction API
+
+    Attributes:
+    -----------
+    prediction : str
+        Predicted outcome from the model.
+    """
 
     prediction: str
