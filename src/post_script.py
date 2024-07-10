@@ -1,8 +1,9 @@
 """
 Client Script for Making Predictions
 
-This script sends a sample input dictionary to a specified URL for making predictions.
-It prints the response status code and content.
+This script sends a sample input dictionary to a specified URL
+for making predictions.It prints the response status code
+and content.
 """
 
 from typing import Any, Dict

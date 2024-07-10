@@ -1,8 +1,7 @@
-"""
-Model Python File
+"""Model Python File
 
-This module provides utilities for training, evaluating, saving, and loading
-machine learning models.
+This module provides utilities for training, evaluating,
+saving, and loading machine learning models.
 """
 
 import pickle
@@ -41,7 +40,8 @@ def compute_model_metrics(
     y: pd.Series, preds: pd.Series
 ) -> Tuple[float, float, float]:
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model using precision,
+    recall, and F1.
 
     Parameters
     ----------

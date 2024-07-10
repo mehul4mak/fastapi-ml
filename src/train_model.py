@@ -2,7 +2,8 @@
 Train Machine Learning Model
 
 This script trains a machine learning model using the specified configuration.
-It processes the data, trains the model, and saves the trained model and encoders.
+It processes the data, trains the model, and saves the trained model
+ and encoders.
 """
 
 import yaml
