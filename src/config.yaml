@@ -1,0 +1,15 @@
+CAT_FEATURES:
+- workclass
+- education
+- marital_status
+- occupation
+- relationship
+- race
+- sex
+- native_country
+CLEANED_DATA_PATH: ./data/cleaned_census.csv
+DATA_PATH: ./data/census.csv
+LABEL: salary
+LB_PATH: ./model/labelbinarizer.pkl
+MODEL_PATH: "./model/model.pkl"
+OHE_PATH: ./model/onehotencoder.pkl

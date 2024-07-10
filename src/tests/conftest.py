@@ -4,9 +4,13 @@ conftest.py for fixtures
 
 # pylint: disable=E1128
 import pytest
+import yaml
 
 from clean_data import load_data
 from ml.model import load_model
+
+with open("config.yaml", "rb") as f:
+    config = yaml.safe_load(f)
 
 
 def df_plugin():
@@ -29,7 +33,7 @@ def path():
     """
     pytest fixture for path
     """
-    return "./data/cleaned_census.csv"
+    return config["CLEANED_DATA_PATH"]
 
 
 @pytest.fixture(scope="session")
@@ -39,28 +43,19 @@ def df(path):
 
 @pytest.fixture(scope="session")
 def cat_features():
-    return [
-        "workclass",
-        "education",
-        "marital_status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native_country",
-    ]
+    return config["CAT_FEATURES"]
 
 
 @pytest.fixture(scope="session")
 def label():
-    return "salary"
+    return config["LABEL"]
 
 
 @pytest.fixture(scope="session")
 def encoder():
-    return load_model("./model/onehotencoder.pkl")
+    return load_model(config["OHE_PATH"])
 
 
 @pytest.fixture(scope="session")
 def lb():
-    return load_model("./model/labelbinarizer.pkl")
+    return load_model(config["LB_PATH"])
