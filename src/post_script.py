@@ -21,7 +21,7 @@ sample_dict: Dict[str, Any] = {
     "sex": "male",
     "native_country": "united_states",
     "age": 39,
-    "fnlwgt": 77516,
+    "fnlgt": 77516,
     "education_num": 13,
     "capital_gain": 2174,
     "capital_loss": 0,
@@ -29,7 +29,7 @@ sample_dict: Dict[str, Any] = {
 }
 
 # Define the URL for the prediction API
-url: str = "https://udacity-c3-project.herokuapp.com/predict"
+url: str = "https://fastapi-ml-v69e.onrender.com/predict"
 
 # Send a POST request to the API with the sample input dictionary
 post_response = requests.post(url, json=sample_dict)
