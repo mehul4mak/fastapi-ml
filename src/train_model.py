@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 from clean_data import load_data
 from ml.data import process_data
-from ml.model import save_model, train_model
+from ml.model import data_slice_based_model_metrics, save_model, train_model
 
 # Load configuration from yaml file
 with open("config.yaml", "rb") as f:
@@ -37,3 +37,15 @@ model = train_model(X_train, y_train)
 save_model(model, file_name=config["MODEL_PATH"])
 save_model(encoder, file_name=config["OHE_PATH"])
 save_model(lb, file_name=config["LB_PATH"])
+
+
+# Compute metrics on each slices
+data_slice_based_model_metrics(
+    data,
+    model,
+    config["CAT_FEATURES"],
+    label=config["LABEL"],
+    encoder=encoder,
+    lb=lb,
+    process_data=process_data,
+)
